@@ -1,6 +1,9 @@
 server:
   port: 5000
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     username: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -9,3 +12,8 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: 1
+      logic-not-delete-value: 0
