@@ -1,5 +1,7 @@
 package com.study.labsystem;
 
+import com.study.labsystem.config.JwtConfig;
+import com.study.labsystem.config.WebConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

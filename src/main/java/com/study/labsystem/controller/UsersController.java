@@ -3,11 +3,13 @@ package com.study.labsystem.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.study.labsystem.common.Result;
+import com.study.labsystem.config.JwtConfig;
 import com.study.labsystem.pojo.Roles;
 import com.study.labsystem.pojo.Users;
 import com.study.labsystem.pojo.UsersVo;
 import com.study.labsystem.service.IRolesService;
 import com.study.labsystem.service.IUsersService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +29,16 @@ import java.util.List;
 public class UsersController {
     @Autowired
     private IUsersService usersService;
+    @Autowired
+    private JwtConfig jwtConfig;
 
     @PostMapping("/login")
-    public Result<UsersVo> userLogin(@RequestBody Users user){
+    public Result<UsersVo> userLogin(@RequestBody Users user, HttpServletResponse response){
         Users findUser = usersService.loginGet(user);
         if (findUser!=null){
+            // 登录成功，返回token
+            String token = jwtConfig.createToken(String.valueOf(findUser.getId()));
+            response.setHeader(jwtConfig.getHeader(),token);
             UsersVo usersVo = new UsersVo();
             BeanUtils.copyProperties(findUser,usersVo);
             return Result.success("登录成功",usersVo);

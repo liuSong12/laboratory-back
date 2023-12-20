@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.labsystem.mapper.LabsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="getPointsMap" type="com.study.labsystem.pojo.Labs">
+        <id column="id" property="id" />
+        <result column="lat" property="lat" />
+        <result column="lng" property="lng" />
+        <result column="lab_id" property="labId" />
+        <result column="capacity" property="capacity" />
+        <result column="lab_name" property="labName" />
+        <result column="college_id" property="collegeId" />
+        <collection property="labTypeName" column="lab_id" select="getLabTypeName" ofType="java.lang.String"/>
+        <collection property="labCollegeName" column="college_id" ofType="java.lang.String" select="getLabCollegeName"/>
+    </resultMap>
+
+    <select id="getLabTypeName" resultType="java.lang.String">
+        select lab_name from lab_name where id = #{labId};
+    </select>
+    <select id="getLabCollegeName" resultType="java.lang.String">
+        select college_name from college_name where id = #{collegeId};
+    </select>
+
+
+    <select id="getPoints" resultMap="getPointsMap">
+        select * from labs;
+    </select>
+    
+
+</mapper>

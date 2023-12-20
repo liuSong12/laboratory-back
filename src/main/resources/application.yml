@@ -1,6 +1,10 @@
 server:
   port: 5000
 spring:
+  http:
+    multipart:
+      maxFileSize: 50MB
+      maxRequestSize: 100Mb
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -17,3 +21,12 @@ mybatis-plus:
     db-config:
       logic-delete-field: 1
       logic-not-delete-value: 0
+jwt:
+  secret: privatekey
+  expire: 1800 # 单位秒 30分钟 == 30*60秒
+  header: Authorization
+
+
+
+
+
